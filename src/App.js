@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-// import { StyledEngineProvider } from '@mui/material/styles';
+import { StyledEngineProvider } from '@mui/material/styles';
 import VolumeControle from './components/VolumeControle';
 import Switch from '@mui/material/Switch';
 
@@ -162,21 +162,14 @@ export class App extends Component {
       checked: true
     }
     this.updateDisplay = this.updateDisplay.bind(this);
-    this.handleVoluemChange = this.handleVoluemChange.bind(this);
     this.handleVolume = this.handleVolume.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleVoluemChange(e) {
-    this.setState({
-      volume: e.target.value,
-      display: Math.floor(e.target.value * 100)
-    })
-  }
-
   handleVolume(value) {
     this.setState({
-      display: value
+      volume: value,
+      display: `Volume: ${Math.floor(value * 100)}`
     })
   }
 
@@ -206,26 +199,20 @@ export class App extends Component {
             updateDisplay={this.updateDisplay}
           />
           <div id='control'>
-            <div id="display">{this.state.display}</div>
-            <input
-              id='volume'
-              type='range'
-              min={0}
-              max={1}
-              step={0.01}
-              value={this.state.volume}
-              onChange={this.handleVoluemChange}
-            />
-            {/* <StyledEngineProvider injectFirst> */}
-            <VolumeControle onVolumeChange={this.handleVolume} />
-            {/* </StyledEngineProvider> */}
-            <div>
-              {/* <p>Power</p> */}
+            <div className='power-btn' >
+              <span>Power</span>
               <Switch
                 checked={this.state.checked}
                 onChange={this.handleChange}
                 inputProps={{ 'aria-label': 'controlled' }}
               />
+            </div>
+
+            <div className='display-box' >
+              <div id="display">{this.state.display}</div>
+              <StyledEngineProvider injectFirst>
+                <VolumeControle onVolumeChange={this.handleVolume} />
+              </StyledEngineProvider>
             </div>
           </div>
         </div>

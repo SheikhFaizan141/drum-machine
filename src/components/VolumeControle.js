@@ -6,11 +6,11 @@ import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 
 const VolumeControle = ({ onVolumeChange }) => {
-    const [value, setValue] = React.useState(30);
+    const [value, setValue] = React.useState(0.3);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-        onVolumeChange(value)
+        onVolumeChange(newValue)
     };
 
     return (
