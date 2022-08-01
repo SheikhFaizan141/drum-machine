@@ -1,5 +1,8 @@
-import React, { Component, createRef } from 'react'
+import React, { Component } from 'react'
 import './App.css'
+// import { StyledEngineProvider } from '@mui/material/styles';
+import VolumeControle from './components/VolumeControle';
+import Switch from '@mui/material/Switch';
 
 const bankOne = [
   {
@@ -111,7 +114,6 @@ class DrumPad extends Component {
         id={this.props.id}
         className={`drum-pad`}
         onClick={this.playSound}
-        ref={this.myRef}
       >
         <audio
           onEnded={this.handleEnd}
@@ -128,7 +130,6 @@ class DrumPad extends Component {
 class DrumBox extends Component {
   constructor(props) {
     super(props);
-    this.myRef = React.createRef();
   }
 
   render() {
@@ -139,7 +140,6 @@ class DrumBox extends Component {
             return (
               <DrumPad
                 key={ele.keyTrigger}
-                ref={this.myRef}
                 keyTrigger={ele.keyTrigger}
                 id={ele.id}
                 url={ele.url}
@@ -158,10 +158,13 @@ export class App extends Component {
     super(props)
     this.state = {
       display: String.fromCharCode(160),
-      volume: 0.35
+      volume: 0.35,
+      checked: true
     }
     this.updateDisplay = this.updateDisplay.bind(this);
     this.handleVoluemChange = this.handleVoluemChange.bind(this);
+    this.handleVolume = this.handleVolume.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleVoluemChange(e) {
@@ -171,10 +174,22 @@ export class App extends Component {
     })
   }
 
+  handleVolume(value) {
+    this.setState({
+      display: value
+    })
+  }
+
   updateDisplay(name) {
     this.setState({
       display: name
     })
+  }
+
+  handleChange() {
+    this.setState(prevState => ({
+      checked: !prevState.checked
+    }))
   }
 
   render() {
@@ -185,7 +200,6 @@ export class App extends Component {
 
     return (
       <div className='container'>
-        <h2>DRUM MACHINE</h2>
         <div id='drum-machine'>
           <DrumBox
             track={bankOne}
@@ -202,10 +216,16 @@ export class App extends Component {
               value={this.state.volume}
               onChange={this.handleVoluemChange}
             />
-            <label htmlFor="volume">Volume</label>
-            <div className='btn-box'>
-              {/* <input type='checkbox' /> */}
-              {/* <input type='checkbox' /> */}
+            {/* <StyledEngineProvider injectFirst> */}
+            <VolumeControle onVolumeChange={this.handleVolume} />
+            {/* </StyledEngineProvider> */}
+            <div>
+              {/* <p>Power</p> */}
+              <Switch
+                checked={this.state.checked}
+                onChange={this.handleChange}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
             </div>
           </div>
         </div>
