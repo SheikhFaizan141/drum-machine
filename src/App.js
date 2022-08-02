@@ -52,18 +52,27 @@ const bankOne = [
   }
 ];
 
+const activeStyle = {
+  backgroundColor: 'orange',
+  boxShadow: '0 3px black',
+  transform: 'scale(0.98)'
+}
+
+const inactiveStyle = {
+  backgroundColor: 'rgb(255, 255, 255)',
+  boxShadow: '0 4px 16px black'
+}
+
 
 class DrumPad extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      padStyle: {
-        backgroundColor: 'rgb(255, 255, 255)'
-      }
+      padStyle: inactiveStyle
     }
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.playSound = this.playSound.bind(this)
-    this.handleEnd = this.handleEnd.bind(this);
+    this.handleEnded = this.handleEnded.bind(this);
   }
 
   componentDidMount() {
@@ -75,7 +84,6 @@ class DrumPad extends Component {
   }
 
   handleKeyPress(e) {
-    console.log(e)
     const keyPressed = e.key.toUpperCase();
     if (keyPressed === this.props.keyTrigger) {
       this.playSound()
@@ -91,18 +99,13 @@ class DrumPad extends Component {
     this.props.updateDisplay(this.props.id)
 
     this.setState({
-      padStyle: {
-        backgroundColor: 'rgb(179 175 45)',
-        transform: 'scale(0.96) translate(1px, 1px)'
-      }
+      padStyle: activeStyle
     })
   }
 
-  handleEnd() {
+  handleEnded() {
     this.setState({
-      padStyle: {
-        backgroundColor: 'rgb(255, 255, 255)'
-      }
+      padStyle: inactiveStyle
     })
   }
 
@@ -113,11 +116,11 @@ class DrumPad extends Component {
       <div
         style={this.state.padStyle}
         id={this.props.id}
-        className={`drum-pad`}
+        className='drum-pad btn'
         onClick={this.playSound}
       >
         <audio
-          onEnded={this.handleEnd}
+          onEnded={this.handleEnded}
           className='clip'
           id={this.props.keyTrigger}
           src={this.props.url}
@@ -160,7 +163,7 @@ export class App extends Component {
     this.state = {
       display: String.fromCharCode(160),
       volume: 0.35,
-      checked: true
+      isOn: true
     }
     this.updateDisplay = this.updateDisplay.bind(this);
     this.handleVolume = this.handleVolume.bind(this);
@@ -182,7 +185,7 @@ export class App extends Component {
 
   handleChange() {
     this.setState(prevState => ({
-      checked: !prevState.checked
+      isOn: !prevState.isOn
     }))
   }
 
@@ -192,6 +195,7 @@ export class App extends Component {
       clip.volume = this.state.volume
     })
 
+
     return (
       <div className='container'>
         <div id='drum-machine'>
@@ -200,10 +204,13 @@ export class App extends Component {
             updateDisplay={this.updateDisplay}
           />
           <div id='control'>
-            <div className='power-btn' >
+            <div
+              className='power-btn'
+              style={{ backgroundColor: this.state.isOn ? 'greenyellow' : 'orangered'}}
+            >
               <span>Power</span>
               <Switch
-                checked={this.state.checked}
+                checked={this.state.isOn}
                 onChange={this.handleChange}
                 inputProps={{ 'aria-label': 'controlled' }}
               />
@@ -212,7 +219,10 @@ export class App extends Component {
             <div className='display-box' >
               <div id="display">{this.state.display}</div>
               <StyledEngineProvider injectFirst>
-                <VolumeControle onVolumeChange={this.handleVolume} />
+                <VolumeControle
+                  onChange={this.handleVolume}
+                  isOn = {this.state.isOn}
+                />
               </StyledEngineProvider>
             </div>
           </div>
