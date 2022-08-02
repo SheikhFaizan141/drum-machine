@@ -75,6 +75,7 @@ class DrumPad extends Component {
   }
 
   handleKeyPress(e) {
+    console.log(e)
     const keyPressed = e.key.toUpperCase();
     if (keyPressed === this.props.keyTrigger) {
       this.playSound()
