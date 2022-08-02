@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './App.css'
-import { StyledEngineProvider } from '@mui/material/styles';
 import VolumeControle from './components/VolumeControle';
 import Switch from '@mui/material/Switch';
 
@@ -55,7 +54,7 @@ const bankOne = [
 const activeStyle = {
   backgroundColor: 'orange',
   boxShadow: '0 3px black',
-  transform: 'scale(0.98)'
+  transform: 'scale(0.96)'
 }
 
 const inactiveStyle = {
@@ -72,7 +71,6 @@ class DrumPad extends Component {
     }
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.playSound = this.playSound.bind(this)
-    this.handleEnded = this.handleEnded.bind(this);
   }
 
   componentDidMount() {
@@ -85,8 +83,22 @@ class DrumPad extends Component {
 
   handleKeyPress(e) {
     const keyPressed = e.key.toUpperCase();
-    if (keyPressed === this.props.keyTrigger) {
+    if (keyPressed === this.props.keyTrigger && this.props.isOn) {
       this.playSound()
+    } else if (keyPressed === this.props.keyTrigger) {
+      this.setState({
+        padStyle: {
+          transform: 'scale(0.96)',
+          backgroundColor: '#fff',
+          boxShadow: '0 3px black'
+        }
+      })
+
+      setTimeout(() => {
+        this.setState({
+          padStyle: inactiveStyle
+        })
+      }, 200)
     }
   }
 
@@ -101,17 +113,16 @@ class DrumPad extends Component {
     this.setState({
       padStyle: activeStyle
     })
-  }
 
-  handleEnded() {
-    this.setState({
-      padStyle: inactiveStyle
-    })
+    setTimeout(() => {
+      this.setState({
+        padStyle: inactiveStyle
+      })
+    }, 200)
   }
 
 
   render() {
-
     return (
       <div
         style={this.state.padStyle}
@@ -120,7 +131,6 @@ class DrumPad extends Component {
         onClick={this.playSound}
       >
         <audio
-          onEnded={this.handleEnded}
           className='clip'
           id={this.props.keyTrigger}
           src={this.props.url}
@@ -140,22 +150,37 @@ class DrumBox extends Component {
     return (
       <div className='drum-box'>
         {
-          this.props.track.map(ele => {
-            return (
-              <DrumPad
-                key={ele.keyTrigger}
-                keyTrigger={ele.keyTrigger}
-                id={ele.id}
-                url={ele.url}
-                updateDisplay={this.props.updateDisplay}
-              />
-            )
-          })
+          this.props.isOn
+            ? this.props.track.map(ele => {
+              return (
+                <DrumPad
+                  key={ele.keyTrigger}
+                  keyTrigger={ele.keyTrigger}
+                  id={ele.id}
+                  url={ele.url}
+                  updateDisplay={this.props.updateDisplay}
+                  isOn={this.props.isOn}
+                />
+              )
+            })
+            : this.props.track.map(ele => {
+              return (
+                <DrumPad
+                  key={ele.keyTrigger}
+                  keyTrigger={ele.keyTrigger}
+                  id={ele.id}
+                  url='#'
+                  updateDisplay={this.props.updateDisplay}
+                  isOn={this.props.isOn}
+                />
+              )
+            })
         }
       </div>
     )
   }
 }
+
 
 export class App extends Component {
   constructor(props) {
@@ -185,7 +210,8 @@ export class App extends Component {
 
   handleChange() {
     this.setState(prevState => ({
-      isOn: !prevState.isOn
+      isOn: !prevState.isOn,
+      display: String.fromCharCode(160)
     }))
   }
 
@@ -199,14 +225,17 @@ export class App extends Component {
     return (
       <div className='container'>
         <div id='drum-machine'>
+
           <DrumBox
             track={bankOne}
             updateDisplay={this.updateDisplay}
+            isOn={this.state.isOn}
           />
+
           <div id='control'>
             <div
               className='power-btn'
-              style={{ backgroundColor: this.state.isOn ? 'greenyellow' : 'orangered'}}
+              style={{ backgroundColor: this.state.isOn ? 'greenyellow' : 'orangered' }}
             >
               <span>Power</span>
               <Switch
@@ -218,12 +247,10 @@ export class App extends Component {
 
             <div className='display-box' >
               <div id="display">{this.state.display}</div>
-              <StyledEngineProvider injectFirst>
-                <VolumeControle
-                  onChange={this.handleVolume}
-                  isOn = {this.state.isOn}
-                />
-              </StyledEngineProvider>
+              <VolumeControle
+                onChange={this.handleVolume}
+                isOn={this.state.isOn}
+              />
             </div>
           </div>
         </div>
