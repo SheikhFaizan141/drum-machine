@@ -1,13 +1,12 @@
 .container {
     background: url('./img/kika-pardo-GyclzZ3lBPk-unsplash.jpg');
-    background-position: center;
+    /* background-position: center; */
     background-size: contain;
     background-repeat: repeat-x;
-
+    width: 650px;
     margin: 0;
-    padding: 1.5rem 2rem;
-    border-radius: 4px;
-    text-align: center;
+    padding: 2rem 2.5rem;
+    border-radius: 3px;
     box-shadow: 0 0 8px black;
 }
 
@@ -22,22 +21,19 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 0.5rem;
     border-radius: 3px;
-    user-select: none;
-    width: 380px;
+    user-select: none;   
+    width: 60%;
 }
 
 .drum-pad {
-    text-align: center;
     height: 80px;
-    width: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.45rem;
     font-weight: 700;
-    border-radius: 3px;
+    border-radius: 5px;
 }
-
 
 #control {
     display: flex;
@@ -45,13 +41,11 @@
     align-items: center;
     justify-content: center;
     row-gap: 1rem;
-
-    background: linear-gradient(rgba(0, 0, 0, 0.69), rgba(0, 0, 0, 1));
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    width: 40%;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9));
     border-radius: 3px;
-    padding: 0 1rem;
 }
-
 
 #display {
     background-color: rgb(255, 255, 255);
@@ -59,9 +53,9 @@
     font-size: 1rem;
     font-weight: 500;
     text-align: center;
-    width: 100%;
     padding: 0.75rem;
     border-radius: 3px;
+    width: 90%;
 }
 
 .speaker-icon {

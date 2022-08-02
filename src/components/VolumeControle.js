@@ -23,7 +23,7 @@ const VolumeControle = ({ onChange, isOn }) => {
                         max={1}
                         step={0.01}
                         aria-label="Volume"
-                        value={value}
+                        value={value} 
                         onChange={handleChange}
                     />
                         :

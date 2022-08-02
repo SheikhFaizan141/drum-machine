@@ -142,10 +142,7 @@ class DrumPad extends Component {
 }
 
 class DrumBox extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+  
   render() {
     return (
       <div className='drum-box'>
