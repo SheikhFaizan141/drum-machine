@@ -72,6 +72,9 @@ class DrumPad extends Component {
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.playSound = this.playSound.bind(this)
+
+    this.activePad = this.activePad.bind(this)
+    this.inActivePad = this.inActivePad.bind(this)
   }
 
   componentDidMount() {
@@ -82,22 +85,30 @@ class DrumPad extends Component {
     document.removeEventListener('keydown', this.handleKeyPress);
   }
 
+
+  activePad() {
+    this.setState({
+      padStyle: activeStyle
+    })
+
+  }
+
+  inActivePad() {
+    setTimeout(() => {
+      this.setState({
+        padStyle: inactiveStyle
+      })
+    }, 180)
+  }
+
   handleKeyPress(e) {
     const keyPressed = e.key.toUpperCase();
     if (keyPressed === this.props.keyTrigger && this.props.isOn) {
       this.playSound()
 
       this.props.updateDisplay(this.props.id)
-
-      this.setState({
-        padStyle: activeStyle
-      })
-
-      setTimeout(() => {
-        this.setState({
-          padStyle: inactiveStyle
-        })
-      }, 200)
+      this.activePad()
+      this.inActivePad()
 
     } else if (keyPressed === this.props.keyTrigger) {
       this.setState({
@@ -108,11 +119,7 @@ class DrumPad extends Component {
         }
       })
 
-      setTimeout(() => {
-        this.setState({
-          padStyle: inactiveStyle
-        })
-      }, 200)
+      this.inActivePad()
     }
   }
 
@@ -122,16 +129,8 @@ class DrumPad extends Component {
       this.playSound();
 
       this.props.updateDisplay(this.props.id)
-
-      this.setState({
-        padStyle: activeStyle
-      })
-
-      setTimeout(() => {
-        this.setState({
-          padStyle: inactiveStyle
-        })
-      }, 100)
+      this.activePad()
+      this.inActivePad()
 
     } else {
       this.setState({
@@ -142,11 +141,7 @@ class DrumPad extends Component {
         }
       })
 
-      setTimeout(() => {
-        this.setState({
-          padStyle: inactiveStyle
-        })
-      }, 100)
+      this.inActivePad();
     }
 
   }
@@ -184,26 +179,25 @@ class DrumBox extends Component {
       <div className='drum-box'>
         {
           this.props.isOn
-            ? this.props.track.map(ele => {
+            ? this.props.track.map(item => {
               return (
                 <DrumPad
-                  key={ele.keyTrigger}
-                  keyTrigger={ele.keyTrigger}
-                  id={ele.id}
-                  url={ele.url}
+                  key={item.keyTrigger}
+                  keyTrigger={item.keyTrigger}
+                  id={item.id}
+                  url={item.url}
                   updateDisplay={this.props.updateDisplay}
                   isOn={this.props.isOn}
                 />
               )
             })
-            : this.props.track.map(ele => {
+            : this.props.track.map(item => {
               return (
                 <DrumPad
-                  key={ele.keyTrigger}
-                  keyTrigger={ele.keyTrigger}
-                  id={ele.id}
+                  key={item.keyTrigger}
+                  keyTrigger={item.keyTrigger}
+                  id={item.id}
                   url='#'
-                  updateDisplay={this.props.updateDisplay}
                   isOn={this.props.isOn}
                 />
               )
