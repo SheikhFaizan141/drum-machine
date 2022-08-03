@@ -222,12 +222,13 @@ export class App extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleVolume(value) {
+  handleVolume(event, newValue) {
     this.setState({
-      volume: value,
-      display: `Volume: ${Math.floor(value * 100)}`
+      volume: newValue,
+      display: `Volume: ${Math.floor(newValue * 100)}`
     })
-  }
+  };
+
 
   updateDisplay(name) {
     this.setState({
@@ -277,6 +278,7 @@ export class App extends Component {
               <VolumeControl
                 onChange={this.handleVolume}
                 isOn={this.state.isOn}
+                value={this.state.volume}
               />
             </div>
           </div>

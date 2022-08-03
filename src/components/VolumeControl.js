@@ -5,14 +5,7 @@ import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 
-const VolumeControl = ({ onChange, isOn }) => {
-    const [value, setValue] = React.useState(0.35);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-        onChange(newValue)
-    };
-
+const VolumeControl = ({ onChange, value, isOn }) => {
     return (
         <Box sx={{ width: 200 }}>
             <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
@@ -24,7 +17,7 @@ const VolumeControl = ({ onChange, isOn }) => {
                         step={0.01}
                         aria-label="Volume"
                         value={value}
-                        onChange={handleChange}
+                        onChange={onChange}
                     />
                         :
                         <Slider
