@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/drum-machine/static/css/main.e84fa402.css",
-    "main.js": "/drum-machine/static/js/main.70628704.js",
+    "main.css": "/drum-machine/static/css/main.7876b35d.css",
+    "main.js": "/drum-machine/static/js/main.c0bb6c33.js",
     "static/js/787.c419f7a1.chunk.js": "/drum-machine/static/js/787.c419f7a1.chunk.js",
+    "static/media/kika-pardo-GyclzZ3lBPk-unsplash.jpg": "/drum-machine/static/media/kika-pardo-GyclzZ3lBPk-unsplash.ea6927003790c85be6b5.jpg",
     "index.html": "/drum-machine/index.html",
-    "main.e84fa402.css.map": "/drum-machine/static/css/main.e84fa402.css.map",
-    "main.70628704.js.map": "/drum-machine/static/js/main.70628704.js.map",
+    "main.7876b35d.css.map": "/drum-machine/static/css/main.7876b35d.css.map",
+    "main.c0bb6c33.js.map": "/drum-machine/static/js/main.c0bb6c33.js.map",
     "787.c419f7a1.chunk.js.map": "/drum-machine/static/js/787.c419f7a1.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e84fa402.css",
-    "static/js/main.70628704.js"
+    "static/css/main.7876b35d.css",
+    "static/js/main.c0bb6c33.js"
   ]
 }
