@@ -70,6 +70,7 @@ class DrumPad extends Component {
       padStyle: inactiveStyle
     }
     this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.handleClick = this.handleClick.bind(this)
     this.playSound = this.playSound.bind(this)
   }
 
@@ -85,6 +86,19 @@ class DrumPad extends Component {
     const keyPressed = e.key.toUpperCase();
     if (keyPressed === this.props.keyTrigger && this.props.isOn) {
       this.playSound()
+
+      this.props.updateDisplay(this.props.id)
+
+      this.setState({
+        padStyle: activeStyle
+      })
+
+      setTimeout(() => {
+        this.setState({
+          padStyle: inactiveStyle
+        })
+      }, 200)
+
     } else if (keyPressed === this.props.keyTrigger) {
       this.setState({
         padStyle: {
@@ -103,22 +117,44 @@ class DrumPad extends Component {
   }
 
 
+  handleClick() {
+    if (this.props.isOn) {
+      this.playSound();
+
+      this.props.updateDisplay(this.props.id)
+
+      this.setState({
+        padStyle: activeStyle
+      })
+
+      setTimeout(() => {
+        this.setState({
+          padStyle: inactiveStyle
+        })
+      }, 100)
+
+    } else {
+      this.setState({
+        padStyle: {
+          transform: 'scale(0.96)',
+          backgroundColor: '#fff',
+          boxShadow: '0 3px black'
+        }
+      })
+
+      setTimeout(() => {
+        this.setState({
+          padStyle: inactiveStyle
+        })
+      }, 100)
+    }
+
+  }
+
   playSound() {
     const track = document.getElementById(this.props.keyTrigger)
     track.currentTime = 0;
     track.play()
-
-    this.props.updateDisplay(this.props.id)
-
-    this.setState({
-      padStyle: activeStyle
-    })
-
-    setTimeout(() => {
-      this.setState({
-        padStyle: inactiveStyle
-      })
-    }, 200)
   }
 
 
@@ -128,7 +164,7 @@ class DrumPad extends Component {
         style={this.state.padStyle}
         id={this.props.id}
         className='drum-pad btn'
-        onClick={this.playSound}
+        onClick={this.handleClick}
       >
         <audio
           className='clip'
@@ -142,7 +178,7 @@ class DrumPad extends Component {
 }
 
 class DrumBox extends Component {
-  
+
   render() {
     return (
       <div className='drum-box'>
