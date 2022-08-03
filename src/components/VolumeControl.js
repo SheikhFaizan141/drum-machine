@@ -5,7 +5,7 @@ import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 
-const VolumeControle = ({ onChange, isOn }) => {
+const VolumeControl = ({ onChange, isOn }) => {
     const [value, setValue] = React.useState(0.35);
 
     const handleChange = (event, newValue) => {
@@ -23,7 +23,7 @@ const VolumeControle = ({ onChange, isOn }) => {
                         max={1}
                         step={0.01}
                         aria-label="Volume"
-                        value={value} 
+                        value={value}
                         onChange={handleChange}
                     />
                         :
@@ -43,4 +43,4 @@ const VolumeControle = ({ onChange, isOn }) => {
     );
 }
 
-export default VolumeControle
+export default VolumeControl

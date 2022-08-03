@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import VolumeControle from './components/VolumeControle';
+import VolumeControl from './components/VolumeControl';
 import Switch from '@mui/material/Switch';
 
 const bankOne = [
@@ -274,7 +274,7 @@ export class App extends Component {
 
             <div className='display-box' >
               <div id="display">{this.state.display}</div>
-              <VolumeControle
+              <VolumeControl
                 onChange={this.handleVolume}
                 isOn={this.state.isOn}
               />
